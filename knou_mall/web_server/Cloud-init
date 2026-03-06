@@ -25,6 +25,22 @@ write_files:
       uv run create-db
       uv run shop_manage user-create
       uv run shop_manage goods-insert
-      uv run waitress-serve --port 80 knou_shop2.shop_main:app
+  - path: "/etc/systemd/system/shop2.service"
+    content: |
+      [Unit]
+      Description=Shop2 Web Service
+      After=network.target
+
+      [Service]
+      WorkingDirectory=/opt/shop2
+      ExecStart=/usr/local/bin/uv run waitress-serve --port 80 knou_shop2.shop_main:app
+      Restart=always
+      RestartSec=5
+
+      [Install]
+      WantedBy=multi-user.target
 runcmd:
   - [/usr/local/bin/setup_shop.sh]
+  - systemctl daemon-reload
+  - systemctl enable shop2
+  - systemctl start shop2
