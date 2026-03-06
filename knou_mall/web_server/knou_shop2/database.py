@@ -1,14 +1,23 @@
 from sqlalchemy import create_engine, URL
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from yaml import load, Loader
+from azure.identity import DefaultAzureCredential
+from azure.keyvault.secrets import SecretClient
+from dotenv import load_dotenv
+from os import getenv
 
-application_settings = load(open("/opt/shop2.yml"), Loader)
+load_dotenv("/opt/shop2.env")
 
-DB_HOST = application_settings.get("DB_HOST")
-DB_USER = application_settings.get("DB_USER")
-DB_PASSWD = application_settings.get("DB_PASSWD")
-DB_NAME = application_settings.get("DB_NAME")
+DB_HOST = getenv("DB_HOST")
+DB_USER = getenv("DB_USER")
+DB_NAME = getenv("DB_NAME")
+VAULT_URL = getenv("VAULT_URL")
+
+credential = DefaultAzureCredential()
+client = SecretClient(vault_url=VAULT_URL, credential=credential)
+
+retrieved_secret = client.get_secret("MALL-DB-PASSWORD")
+DB_PASSWD = retrieved_secret.value
 
 url_object = URL.create("postgresql+pg8000",
     username=DB_USER,

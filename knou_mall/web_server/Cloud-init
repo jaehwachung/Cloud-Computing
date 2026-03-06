@@ -6,17 +6,25 @@ packages:
   - python3-pip
   - libpq-dev
   - build-essential
+  - curl
 write_files:
-  - path: "/opt/shop2.yml"
-    append: true
+  - path: "/opt/shop2.env"
     content: |
-      DB_HOST: <db_host>
-      DB_USER: <db_user>
-      DB_PASSWD: <db_user_password>
-      DB_NAME: <db_name>
+      DB_HOST=<db_host>
+      DB_USER=<db_user>
+      VAULT_URL=<vault_url>
+      DB_NAME=<db_name>
+  - path: "/usr/local/bin/setup_shop.sh"
+    permissions: "0755"
+    content: |
+      #!/bin/bash
+      curl -LsSf https://astral.sh/uv/install.sh | env UV_UNMANAGED_INSTALL=/usr/local/bin sh
+      uv init /opt/shop2
+      cd /opt/shop2
+      uv add https://github.com/jaehwachung/cloud_computing/releases/download/latest/knou_cloud_computing_shop2-1.1-py3-none-any.whl
+      uv run create-db
+      uv run shop_manage user-create
+      uv run shop_manage goods-insert
+      uv run waitress-serve --port 80 knou_shop2.shop_main:app
 runcmd:
-  - python3 -m pip install https://github.com/jaehwachung/cloud_computing/releases/download/latest/knou_cloud_computing_shop2-latest-py3-none-any.whl
-  - create-db
-  - shop_manage user-create
-  - shop_manage goods-insert
-  - waitress-serve --port 80 knou_shop2.shop_main:app
+  - [/usr/local/bin/setup_shop.sh]

@@ -1,3 +1,33 @@
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "knou-cloud-computing-shop2"
+version = "1.1"
+authors = [
+  { name = "Lee Ji-ho", email = "search5@gmail.com" },
+]
+description = "한국방송통신대학교 컴퓨터과학과 4학년 2학기 클라우드 컴퓨팅 SHOP2"
+readme = "README.md"
+license = { text = "BSD-3-Clause" }
+classifiers = [
+    "Framework :: Flask",
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "flask",
+    "sqlalchemy",
+    "waitress",
+    "pg8000",
+    "python-dotenv",
+    "azure-identity",
+    "azure-keyvault-secrets",
+]
+
+[project.scripts]
+create-db = "knou_shop2.database:init_db"
+shop_manage = "knou_shop2.manage:cli"
+
+[tool.setuptools]
+include-package-data = true
