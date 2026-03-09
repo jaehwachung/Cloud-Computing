@@ -1,12 +1,40 @@
 #cloud-config
 package_upgrade: true
 packages:
+  - git
   - python3
   - python3-pip
   - build-essential
+  - curl
+write_files:
+  - path: "/usr/local/bin/setup_shop.sh"
+    permissions: "0755"
+    content: |
+      #!/bin/bash
+      curl -LsSf https://astral.sh/uv/install.sh | env UV_UNMANAGED_INSTALL=/usr/local/bin sh
+      mkdir -p /opt
+      git clone https://github.com/jaehwachung/cloud_computing.git
+      cd /opt/cloud_computing/knou_mall/front_page
+      uv init
+      uv add flask waitress
+  - path: "/etc/systemd/system/shop.service"
+    content: |
+      [Unit]
+      Description=KNOU Mall Shop Service
+      After=network.target
+
+      [Service]
+      Type=simple
+      User=root
+      WorkingDirectory=/opt/cloud_computing/knou_mall/front_page
+      ExecStart=/usr/local/bin/uv run shop_main.py
+      Restart=always
+      RestartSec=5
+
+      [Install]
+      WantedBy=multi-user.target
 runcmd:
-  - python3 -m pip install flask waitress
-  - cd /opt
-  - git clone https://github.com/jaehwachung/cloud_computing.git
-  - cd /opt/cloud_computing/knou_mall/front_page
-  - python3 shop_main.py
+  - [/usr/local/bin/setup_shop.sh]
+  - systemctl daemon-reload
+  - systemctl enable shop
+  - systemctl start shop
