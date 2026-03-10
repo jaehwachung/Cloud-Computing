@@ -13,7 +13,7 @@ write_files:
       #!/bin/bash
       curl -LsSf https://astral.sh/uv/install.sh | env UV_UNMANAGED_INSTALL=/usr/local/bin sh
       mkdir -p /opt
-      git clone https://github.com/jaehwachung/cloud_computing.git
+      git clone https://github.com/jaehwachung/cloud_computing.git /opt/cloud_computing
       cd /opt/cloud_computing/knou_mall/front_page
       uv init
       uv add flask waitress
