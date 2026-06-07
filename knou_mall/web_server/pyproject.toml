@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "knou-cloud-computing-shop2"
-version = "1.1"
+version = "1.2"
 authors = [
   { name = "Lee Ji-ho", email = "search5@gmail.com" },
 ]

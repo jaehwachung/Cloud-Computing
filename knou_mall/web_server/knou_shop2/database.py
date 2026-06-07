@@ -11,13 +11,15 @@ load_dotenv("/opt/shop2.env")
 DB_HOST = getenv("DB_HOST")
 DB_USER = getenv("DB_USER")
 DB_NAME = getenv("DB_NAME")
+DB_PASSWD = getenv("DB_PASSWD")
 VAULT_URL = getenv("VAULT_URL")
 
-credential = DefaultAzureCredential()
-client = SecretClient(vault_url=VAULT_URL, credential=credential)
+if VAULT_URL:
+    credential = DefaultAzureCredential()
+    client = SecretClient(vault_url=VAULT_URL, credential=credential)
 
-retrieved_secret = client.get_secret("MALL-DB-PASSWORD")
-DB_PASSWD = retrieved_secret.value
+    retrieved_secret = client.get_secret("MALL-DB-PASSWORD")
+    DB_PASSWD = retrieved_secret.value
 
 url_object = URL.create("postgresql+pg8000",
     username=DB_USER,

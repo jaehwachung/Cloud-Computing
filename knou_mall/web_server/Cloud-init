@@ -12,7 +12,7 @@ write_files:
     content: |
       DB_HOST=<db_host>
       DB_USER=<db_user>
-      VAULT_URL=<vault_url>
+      DB_PASSWD=<db_passwd>
       DB_NAME=<db_name>
   - path: "/usr/local/bin/setup_shop.sh"
     permissions: "0755"
