@@ -21,7 +21,7 @@ write_files:
       curl -LsSf https://astral.sh/uv/install.sh | env UV_UNMANAGED_INSTALL=/usr/local/bin sh
       uv init /opt/shop2
       cd /opt/shop2
-      uv add https://github.com/jaehwachung/cloud_computing/releases/download/latest/knou_cloud_computing_shop2-1.1-py3-none-any.whl
+      uv add https://github.com/jaehwachung/cloud_computing/releases/download/latest/knou_cloud_computing_shop2-1.2-py3-none-any.whl
       uv run create-db
       uv run shop_manage user-create
       uv run shop_manage goods-insert
