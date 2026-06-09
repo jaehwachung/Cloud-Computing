@@ -1,11 +1,14 @@
+import azure.functions as func
 import logging
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 
-import azure.functions as func
 
-def main(req: func.HttpRequest) -> func.HttpResponse:
+app = func.FunctionApp(http_auth_level=func.AuthLevel.ANONYMOUS)
+
+@app.route(route="mallSendMail")
+def mallSendMail(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     mail_title = req.params.get('mail_title')
