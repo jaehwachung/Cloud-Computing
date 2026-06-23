@@ -12,8 +12,8 @@ write_files:
     content: |
       DB_HOST=<db_host>
       DB_USER=<db_user>
-      DB_PASSWD=<db_passwd>
       DB_NAME=<db_name>
+      DB_PASSWD=<db_passwd>
   - path: "/usr/local/bin/setup_shop.sh"
     permissions: "0755"
     content: |
