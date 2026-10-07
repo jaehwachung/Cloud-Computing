@@ -43,13 +43,13 @@
                         <aside class="col-sm-5 border-right">
                             <article class="gallery-wrap"> 
                                 <div class="img-big-wrap">
-                                    <div> <a href="#"><img src="https://picsum.photos/443/450"></a></div>
+                                    <div> <a href="#"><img src="{{ url_for('static', filename='images/' ~ item.goods_photo) }}"></a></div>
                                 </div> <!-- slider-product.// -->
                                 <div class="img-small-wrap">
-                                    <div class="item-gallery"> <img src="https://picsum.photos/60/60"> </div>
-                                    <div class="item-gallery"> <img src="https://picsum.photos/60/60"> </div>
-                                    <div class="item-gallery"> <img src="https://picsum.photos/60/60"> </div>
-                                    <div class="item-gallery"> <img src="https://picsum.photos/60/60"> </div>
+                                    <div class="item-gallery"> <img src="{{ url_for('static', filename='images/' ~ item.goods_photo) }}"> </div>
+                                    <div class="item-gallery"> <img src="{{ url_for('static', filename='images/' ~ item.goods_photo) }}"> </div>
+                                    <div class="item-gallery"> <img src="{{ url_for('static', filename='images/' ~ item.goods_photo) }}"> </div>
+                                    <div class="item-gallery"> <img src="{{ url_for('static', filename='images/' ~ item.goods_photo) }}"> </div>
                                 </div> <!-- slider-nav.// -->
                             </article> <!-- gallery-wrap .end// -->
                         </aside>
